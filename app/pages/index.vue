@@ -30,7 +30,7 @@ const analyticsPayload = ref<AnalyticsPayload | null>(null)
 const isTextLoading = ref(false)
 const toastMessage = ref('')
 
-const analyticsInitialStep = ref<'chart' | 'calculator'>('chart')
+const analyticsInitialStep = ref<'chart' | 'conditions'>('chart')
 
 function showToast(msg: string) {
   toastMessage.value = msg
@@ -96,22 +96,17 @@ function handleAssistantResult(response: AssistantResponse) {
 
   if (response.intent === 'deposit') {
     lastRecognizedText.value = response.recognizedText
-    const raw = (response.payload ?? {}) as Record<string, any>
-    const offer = raw.depositOffer ?? {
-      rate: raw.rate ?? 14,
-      termMonths: raw.termMonths ?? 6,
-      minAmount: raw.minAmount ?? 500,
-      maxAmount: raw.maxAmount ?? 10000000,
-      defaultAmount: raw.defaultAmount ?? raw.amount ?? 800000,
-      accountBalance: raw.accountBalance ?? balance.value,
-    }
+    const { depositOffer, requestedAmount } = response.payload
 
     analyticsPayload.value = {
       period: 'Вклад',
       totalSpent: 0,
       categories: [],
-      aiAdvice: raw.aiAdvice ?? '',
-      depositOffer: offer,
+      aiAdvice: '',
+      depositOffer: {
+        ...depositOffer,
+        defaultAmount: requestedAmount ?? depositOffer.defaultAmount,
+      },
     }
     analyticsInitialStep.value = 'conditions'
     activeView.value = 'ANALYTICS'

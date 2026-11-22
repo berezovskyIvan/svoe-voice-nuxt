@@ -45,14 +45,8 @@ export interface AnalyticsCategory {
 }
 
 export interface DepositDirectPayload {
-  depositOffer?: DepositOffer
-  rate?: number
-  termMonths?: number
-  minAmount?: number
-  maxAmount?: number
-  defaultAmount?: number | null
-  accountBalance?: number
-  aiAdvice?: string
+  depositOffer: DepositOffer
+  requestedAmount: number | null
 }
 
 export interface DepositIntentResponse {
@@ -93,7 +87,7 @@ export type AssistantResponse =
   | {
       intent: 'deposit'
       recognizedText: string
-      message: string
+      payload: DepositDirectPayload
     }
   | {
       intent: 'unknown'
