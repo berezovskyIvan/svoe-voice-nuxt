@@ -2,6 +2,7 @@ export interface ZoyaProductItem {
   id: number
   name: string
   price: number
+  oldPrice?: number
   qty: number
   unitLabel: string
   imageUrl: string

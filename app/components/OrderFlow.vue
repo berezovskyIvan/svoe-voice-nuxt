@@ -194,7 +194,11 @@ const extraSuggestions = [
     <template v-if="step === 'cart'">
       <!-- Плашка статуса «Заказ сформирован» (как на макете) -->
       <div class="order-status-banner">
-        <img class="status-check-img" src="/images/check.webp" />
+        <img
+          class="status-check-img"
+          src="/images/check.webp"
+          alt="Успешное оформление заказа"
+        />
         <div class="status-text-col">
           <div class="status-heading">Заказ сформирован</div>
           <div class="status-subtext">Проверьте состав заказа и доставку</div>
@@ -373,7 +377,7 @@ const extraSuggestions = [
     <!-- ЭКРАН 2: ВАШ ЗАКАЗ ОФОРМЛЕН! (7-й экран на 1-м скрине) -->
     <template v-else-if="step === 'success' && orderResult">
       <div class="success-screen">
-        <img class="cow-illustration" src="/images/cow.webp" />
+        <img class="cow-illustration" src="/images/cow.webp" alt="Коровка" />
         <h1 class="success-heading">Ваш заказ оформлен!</h1>
         <p class="success-subtext">
           Заказ №{{ orderResult.orderId }} на сумму

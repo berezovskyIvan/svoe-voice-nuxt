@@ -423,6 +423,10 @@ function goToConfirm() {
         <div class="safe-emoji">🔐</div>
       </div>
 
+      <div v-if="submitError" class="notice-error">
+        {{ submitError }}
+      </div>
+
       <button type="button" class="primary-cta-btn" @click="goToConfirm">
         Продолжить
       </button>
@@ -480,10 +484,6 @@ function goToConfirm() {
           </span>
           <input v-model="agreeContract" type="checkbox" class="ios-switch" />
         </label>
-      </div>
-
-      <div v-if="submitError" class="notice-error">
-        {{ submitError }}
       </div>
 
       <div class="dual-actions">
