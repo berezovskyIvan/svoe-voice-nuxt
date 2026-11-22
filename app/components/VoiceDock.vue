@@ -371,7 +371,7 @@ function handleTextSubmit() {
   z-index: 55;
   padding: 4px 16px 36px;
   background-color: var(--bg-surface);
-  border: 1px solid #494949;
+  border-top: 1px solid #494949;
 }
 
 /* Полноэкранный тёмный режим при активном голосовом вводе (как на 3-м экране макета) */
@@ -489,7 +489,7 @@ function handleTextSubmit() {
   height: 68px;
   border: none;
   border-radius: 50%;
-  background: var(--color-primary);
+  background: var(--button-primary-bg);
   color: var(--text-inverse);
   cursor: pointer;
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
@@ -596,7 +596,7 @@ function handleTextSubmit() {
   height: 32px;
   border: none;
   border-radius: 50%;
-  background: var(--color-primary);
+  background: var(--button-primary-bg);
   color: #ffffff;
   cursor: pointer;
   flex-shrink: 0;
