@@ -140,7 +140,9 @@ export function useZoyaVoice(options: UseZoyaVoiceOptions) {
       clearTimers()
 
       silenceTimer = setTimeout(() => {
-        if (dockState.value !== 'LISTENING') return
+        if (dockState.value !== 'LISTENING') {
+          return
+        }
         dockState.value = 'PAUSED_2S'
 
         autoStopTimer = setTimeout(() => {
@@ -190,7 +192,9 @@ export function useZoyaVoice(options: UseZoyaVoiceOptions) {
     }
 
     socket.onmessage = (event) => {
-      if (typeof event.data !== 'string') return
+      if (typeof event.data !== 'string') {
+        return
+      }
 
       let msg: WsVoiceIncomingMessage
       try {

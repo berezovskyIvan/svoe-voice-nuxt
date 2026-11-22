@@ -55,7 +55,9 @@ const totalPrice = computed(() =>
 
 const formattedDeliveryDate = computed(() => {
   const raw = props.payload.delivery?.date
-  if (!raw) return 'в ближайшее время'
+  if (!raw) {
+    return 'в ближайшее время'
+  }
   try {
     const [y, m, d] = raw.split('-').map(Number)
     const date = new Date(Date.UTC(y!, m! - 1, d!))
@@ -78,7 +80,9 @@ function formatMoney(val: number): string {
 
 function updateQty(index: number, delta: number) {
   const item = cartItems.value[index]
-  if (!item) return
+  if (!item) {
+    return
+  }
 
   const nextQty = item.qty + delta
   if (nextQty <= 0) {

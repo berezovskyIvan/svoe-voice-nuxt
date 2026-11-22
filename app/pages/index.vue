@@ -122,7 +122,9 @@ function handleAssistantResult(response: AssistantResponse) {
 /** Отправка текстовой команды (из инпута, с главного экрана или из меню «Зоя») */
 async function handleTextCommand(text: string) {
   isMenuOpen.value = false
-  if (!text.trim() || isTextLoading.value) return
+  if (!text.trim() || isTextLoading.value) {
+    return
+  }
 
   resetError()
   isVoiceMode.value = false

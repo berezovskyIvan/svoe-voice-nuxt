@@ -46,7 +46,9 @@ export function useZoyaApi() {
   }
 
   function resolveImageUrl(relativePath: string): string {
-    if (!relativePath) return ''
+    if (!relativePath) {
+      return ''
+    }
     try {
       return new URL(relativePath, baseURL).href
     } catch {

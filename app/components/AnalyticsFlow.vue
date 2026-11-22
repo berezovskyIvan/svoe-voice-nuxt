@@ -103,15 +103,28 @@ function formatMoney(val: number): string {
 function clampAmount() {
   const min = offer.value.minAmount || 500
   const max = offer.value.maxAmount || 10000000
-  if (!depositAmount.value || depositAmount.value < min) {
+  const rounded = Math.round(Number(depositAmount.value) || 0)
+
+  if (rounded < min) {
     depositAmount.value = min
-  } else if (depositAmount.value > max) {
+  } else if (rounded > max) {
     depositAmount.value = max
+  } else {
+    depositAmount.value = rounded
   }
 }
 
 async function handleOpenDeposit() {
-  if (!agreeService.value || !agreeContract.value || isSubmitting.value) return
+  clampAmount()
+
+  if (!hasEnoughBalance.value) {
+    submitError.value = `Недостаточно средств на счёте (доступно ${formatMoney(offer.value.accountBalance)} ₽)`
+    return
+  }
+
+  if (!agreeService.value || !agreeContract.value || isSubmitting.value) {
+    return
+  }
 
   if (!idempotencyKey.value) {
     idempotencyKey.value = crypto.randomUUID()
@@ -137,6 +150,18 @@ async function handleOpenDeposit() {
   } finally {
     isSubmitting.value = false
   }
+}
+
+const hasEnoughBalance = computed(() => depositAmount.value <= offer.value.accountBalance)
+
+function goToConfirm() {
+  clampAmount()
+  if (!hasEnoughBalance.value) {
+    submitError.value = `Недостаточно средств на счёте (доступно ${formatMoney(offer.value.accountBalance)} ₽)`
+    return
+  }
+  submitError.value = ''
+  step.value = 'confirm'
 }
 </script>
 
@@ -398,7 +423,7 @@ async function handleOpenDeposit() {
         <div class="safe-emoji">🔐</div>
       </div>
 
-      <button type="button" class="primary-cta-btn" @click="step = 'confirm'">
+      <button type="button" class="primary-cta-btn" @click="goToConfirm">
         Продолжить
       </button>
     </template>
@@ -472,7 +497,7 @@ async function handleOpenDeposit() {
         </button>
         <button
           type="button"
-          :disabled="isSubmitting || !agreeService || !agreeContract"
+          :disabled="isSubmitting || !agreeService || !agreeContract || !hasEnoughBalance"
           class="primary-cta-btn no-margin"
           @click="handleOpenDeposit"
         >

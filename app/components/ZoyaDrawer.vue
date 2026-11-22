@@ -77,7 +77,9 @@ function formatHistoryMeta(item: HistoryItem): string {
 }
 
 function handleSkillClick(chip: { prompt: string; active: boolean }) {
-  if (!chip.active || !chip.prompt) return
+  if (!chip.active || !chip.prompt) {
+    return
+  }
   emit('close')
   emit('selectSkill', chip.prompt)
 }
@@ -339,12 +341,6 @@ function handleSkillClick(chip: { prompt: string; active: boolean }) {
   flex: 1;
   overflow-y: auto;
   padding-top: 16px;
-  padding-bottom: 32px;
-}
-
-.history-section {
-  flex: 1;
-  overflow-y: auto;
   padding-bottom: 84px;
 }
 

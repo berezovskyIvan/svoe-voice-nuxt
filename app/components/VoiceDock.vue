@@ -39,7 +39,9 @@ const waveBars = computed(() => {
     0.35, 0.55, 0.3, 0.25, 0.2,
   ]
   return pattern.map((w) => {
-    if (!isRecordingActive.value) return '4px'
+    if (!isRecordingActive.value) {
+      return '4px'
+    }
     const h = Math.max(4, Math.min(34, Math.round(props.volume * w * 42)))
     return `${h}px`
   })
@@ -114,7 +116,9 @@ function switchToVoiceFromInput() {
 
 function handleTextSubmit() {
   const trimmed = textInput.value.trim()
-  if (!trimmed || props.isTextLoading) return
+  if (!trimmed || props.isTextLoading) {
+    return
+  }
   emit('submitText', trimmed)
   textInput.value = ''
   isKeyboardOpen.value = false
@@ -325,14 +329,18 @@ function handleTextSubmit() {
         class="compact-action-btn"
         @click="handleTextSubmit"
       >
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-          <path d="M12 14a3 3 0 0 0 3-3V5a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3z" />
+        <svg
+          width="18"
+          height="18"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2.4"
+        >
           <path
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2.2"
             stroke-linecap="round"
-            d="M19 11a7 7 0 0 1-14 0M12 18v3M8 21h8"
+            stroke-linejoin="round"
+            d="M5 12h14M12 5l7 7-7 7"
           />
         </svg>
       </button>
