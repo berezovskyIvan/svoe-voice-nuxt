@@ -1,0 +1,148 @@
+@font-face {
+  font-family: 'Inter';
+  src: url('/fonts/inter-regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('/fonts/inter-medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Inter';
+  src: url('/fonts/inter-SemiBold.woff2') format('woff2');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --font-main: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  --fs-hero: 32px; /* Главный заголовок: "Добрый день, Екатерина!" */
+  --fs-h1: 22px; /* Финальные заголовки: "Ваш заказ оформлен!" */
+  --fs-h2: 20px; /* Секции: "Что я умею", "История", "Товары в корзине" */
+  --fs-speech: 18px; /* Живая транскрипция речи сверху */
+  --fs-body-lg: 15px; /* Названия в истории, реплики Зои, кнопки CTA */
+  --fs-body: 14px; /* Инпут, пилюли навыков, пузырь пользователя */
+  --fs-sub: 16px; /* Мета-текст истории, карточки на главной */
+  --fs-caption: 12px; /* Подсказки под микрофоном, лейблы в карточках */
+  --fs-micro: 11px; /* Бейджи "СВОЁ РОДНОЕ", "АНАЛИТИКА", "14%" */
+
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-semibold: 600;
+
+  --bg-app: #090909;
+  --bg-surface: #232323;
+  --bg-surface-elevated: #2e2e2e;
+  --bg-surface-muted: #111411;
+  --bg-surface-subtle: #282d28;
+  --bg-overlay: rgba(0, 0, 0, 0.78);
+  --bg-glass: rgba(21, 25, 21, 0.94);
+
+  /* Дефолтный градиент (Главная страница и экран записи голоса — мягкая прозрачность ~50%) */
+  --bg-top-glow:
+    radial-gradient(
+      62% 36% at 78% 0%,
+      rgba(141, 251, 68, 0.42) 0%,
+      rgba(141, 251, 68, 0) 100%
+    ),
+    radial-gradient(
+      75% 44% at 18% 6%,
+      rgba(60, 205, 134, 0.46) 0%,
+      rgba(60, 205, 134, 0) 100%
+    ),
+    radial-gradient(
+      85% 52% at 28% 22%,
+      rgba(25, 133, 86, 0.36) 0%,
+      rgba(25, 133, 86, 0) 100%
+    );
+
+  /* Градиент «message» и «menu» (Меню Зоя, Корзина, Аналитика, Вклад — мягкий верхний свет) */
+  --bg-glow-compact:
+    radial-gradient(
+      58% 22% at 80% -2%,
+      rgba(141, 251, 68, 0.34) 0%,
+      rgba(141, 251, 68, 0) 100%
+    ),
+    radial-gradient(
+      72% 26% at 22% 0%,
+      rgba(60, 205, 134, 0.38) 0%,
+      rgba(60, 205, 134, 0) 100%
+    );
+
+  --color-primary: #60ff60;
+  --button-primary-bg: #1ccb01;
+  --color-primary-hover: #25b82b;
+  --color-primary-light: #4ef054;
+  --color-primary-soft: rgba(46, 213, 52, 0.15);
+  --color-primary-border: rgba(46, 213, 52, 0.38);
+  --color-primary-border-subtle: rgba(46, 213, 52, 0.2);
+  --color-primary-glow: rgba(46, 213, 52, 0.26);
+
+  --text-primary: #fcfcfd;
+  --text-secondary: #d1d5db;
+  --text-muted: #8e968e;
+  --text-subtle: #646c64;
+  --text-inverse: #071207;
+  --text-accent: #3be841;
+
+  --border-default: rgba(255, 255, 255, 0.08);
+  --border-subtle: rgba(255, 255, 255, 0.05);
+
+  --color-success: #2ed534;
+  --color-success-bg: rgba(46, 213, 52, 0.15);
+  --color-danger: #f46a5e;
+  --color-danger-bg: rgba(244, 106, 94, 0.16);
+  --color-danger-border: rgba(244, 106, 94, 0.35);
+  --color-warning: #fbbf24;
+  --color-warning-bg: rgba(251, 191, 36, 0.14);
+
+  --card-deposit-yellow: linear-gradient(135deg, #d9f94b 0%, #9ef03c 100%);
+  --card-account-purple: linear-gradient(135deg, #6d28d9 0%, #4c1d95 100%);
+
+  --chart-cafe: #2ed534;
+  --chart-supermarket: #8b5cf6;
+  --chart-transport: #ec4899;
+  --chart-pharmacy: #3b82f6;
+  --chart-other: #64748b;
+
+  --radius-sm: 12px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-full: 9999px;
+
+  --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.25);
+  --shadow-md: 0 12px 30px rgba(0, 0, 0, 0.45);
+  --shadow-lg: 0 20px 44px rgba(0, 0, 0, 0.65);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-main);
+  font-weight: var(--fw-regular);
+  font-synthesis: none;
+  background-color: #000000;
+  color: var(--text-primary);
+  -webkit-font-smoothing: antialiased;
+}
+
+button,
+input,
+textarea,
+select {
+  font-family: inherit;
+}

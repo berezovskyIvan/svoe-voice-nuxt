@@ -8,11 +8,20 @@
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
-    "start": "node .output/server/index.mjs"
+    "start": "node .output/server/index.mjs",
+    "lint": "eslint .",
+    "format": "prettier --write \"app/**/*.{ts,vue,css}\""
   },
   "dependencies": {
+    "@nuxt/eslint": "1.17.0",
+    "eslint": "^10.15.0",
     "nuxt": "^4.6.4",
     "vue": "^3.5.44",
     "vue-router": "^5.4.0"
+  },
+  "devDependencies": {
+    "eslint-config-prettier": "^10.1.8",
+    "prettier": "^3.10.1",
+    "typescript": "^6.0.2"
   }
 }
