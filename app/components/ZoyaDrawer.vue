@@ -109,8 +109,8 @@ function handleSkillClick(chip: { prompt: string; active: boolean }) {
               @click="emit('close')"
             >
               <svg
-                width="15"
-                height="15"
+                width="20"
+                height="20"
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
@@ -263,8 +263,8 @@ function handleSkillClick(chip: { prompt: string; active: boolean }) {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 20px;
-  height: 20px;
+  width: 32px;
+  height: 32px;
   padding: 0;
   border: none;
   border-radius: 50%;

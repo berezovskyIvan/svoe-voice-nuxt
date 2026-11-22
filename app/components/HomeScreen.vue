@@ -50,8 +50,8 @@ const promptCards = [
         @click="emit('openMenu')"
       >
         <svg
-          width="15"
-          height="15"
+          width="20"
+          height="20"
           viewBox="0 0 24 24"
           fill="none"
           stroke="currentColor"
@@ -140,8 +140,8 @@ const promptCards = [
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 20px;
-  height: 20px;
+  width: 32px;
+  height: 32px;
   padding: 0;
   border: none;
   border-radius: 50%;
