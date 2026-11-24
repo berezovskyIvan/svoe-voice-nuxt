@@ -742,7 +742,7 @@ const extraSuggestions = [
   transform: translateX(-50%);
   z-index: 35;
   width: 100%;
-  max-width: 100vw;
+  max-width: 440px;
   padding: 16px;
   background-color: var(--bg-surface);
   border-top-left-radius: 32px;

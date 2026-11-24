@@ -19,7 +19,7 @@ const skillChips = [
   { label: 'Платежи', prompt: '', active: false },
   {
     label: 'Вклады',
-    prompt: 'На что я больше всего потратила в этом месяце?',
+    prompt: 'Открой вклад под 14%',
     active: true,
   },
   { label: 'Кредиты', prompt: '', active: false },
@@ -217,12 +217,6 @@ function handleSkillClick(chip: { prompt: string; active: boolean }) {
   padding: 16px 16px 0;
 }
 
-.zoya-identity {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
 .zoya-mascot-img {
   width: 40px;
   height: 40px;
@@ -231,19 +225,6 @@ function handleSkillClick(chip: { prompt: string; active: boolean }) {
   flex-shrink: 0;
   cursor: pointer;
   margin-right: 10px;
-}
-
-.mascot-face {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 32px;
-  height: 26px;
-  border-radius: 50%;
-  background: #ffffff;
-  color: #0f172a;
-  font-size: var(--fs-sub);
-  font-weight: var(--fw-semibold);
 }
 
 .zoya-title {

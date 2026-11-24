@@ -67,7 +67,7 @@ const previewInterest = computed(() =>
 
 const previewTotal = computed(() => depositAmount.value + previewInterest.value)
 
-const chartColors = ['#a855f7', '#14b8a6', '#facc15', '#f97316', '#64748b']
+const chartColors = ['#D500F9', '#03BFA5', '#FF3D00', '#FFC403', '#64748b']
 
 const donutSegments = computed(() => {
   const circumference = 2 * Math.PI * 38
@@ -853,7 +853,7 @@ function goToConfirm() {
 
 .param-val {
   margin-top: 2px;
-  font-size: var(--fs-body-sub);
+  font-size: var(--fs-sub);
   font-weight: var(--fw-regular);
   color: var(--text-primary);
 }
@@ -1222,23 +1222,6 @@ function goToConfirm() {
   height: 240px;
 }
 
-.stacked-check-badge {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 84px;
-  height: 84px;
-  border-radius: 22px;
-  background: linear-gradient(
-    135deg,
-    var(--color-primary-light) 0%,
-    var(--color-primary) 100%
-  );
-  color: #ffffff;
-  font-size: 40px;
-  font-weight: var(--fw-semibold);
-}
-
 .success-green-label {
   margin-top: 8px;
   font-size: var(--fs-sub);
@@ -1307,12 +1290,6 @@ function goToConfirm() {
   border-radius: 50%;
   background: var(--bg-surface-elevated);
   font-size: 16px;
-}
-
-.trio-circle.is-green {
-  background: var(--color-primary);
-  color: #ffffff;
-  font-weight: var(--fw-semibold);
 }
 
 .trio-label {
