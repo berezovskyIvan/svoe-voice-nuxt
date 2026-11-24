@@ -5,28 +5,24 @@ import type {
   AssistantResponse,
   FarmerProductsPayload,
   HistoryItem,
-} from '~/types/zoya'
-import { ZoyaApiError } from '~/composables/useZoyaApi'
+} from '@/types/zoya'
+import { ZoyaApiError } from '@/composables/useZoyaApi'
 
 const { fetchHistory, sendTextCommand, resetDemo } = useZoyaApi()
 
-// Состояние пользователя и истории (из GET /api/actions/history)
 const userName = ref('Екатерина')
 const balance = ref(1800000)
 const history = ref<HistoryItem[]>([])
 const isHistoryLoading = ref(false)
 
-// Навигация по экранам, боковое меню «Зоя» и развернутый голосовой контроллер
 const activeView = ref<ActiveView>('HOME')
 const isMenuOpen = ref(false)
 const isVoiceMode = ref(false)
 
-// Данные текущего активного сценария
 const lastRecognizedText = ref('')
 const marketPayload = ref<FarmerProductsPayload | null>(null)
 const analyticsPayload = ref<AnalyticsPayload | null>(null)
 
-// Состояние текстового запроса и уведомлений
 const isTextLoading = ref(false)
 const toastMessage = ref('')
 
@@ -41,7 +37,6 @@ function showToast(msg: string) {
   }, 3500)
 }
 
-/** Загрузка актуального баланса и истории операций */
 async function loadHistory() {
   isHistoryLoading.value = true
   try {
@@ -71,10 +66,6 @@ const {
   onResult: handleAssistantResult,
 })
 
-/**
- * Единый обработчик результата ассистента — вызывается и из WebSocket,
- * и из текстового эндпоинта POST /api/assistant/text
- */
 function handleAssistantResult(response: AssistantResponse) {
   isVoiceMode.value = false
 
@@ -113,13 +104,11 @@ function handleAssistantResult(response: AssistantResponse) {
     return
   }
 
-  // Если intent === 'unknown'
   isVoiceMode.value = true
   dockState.value = 'ERROR'
   errorMessage.value = response.message || 'Не расслышал. Повторите, пожалуйста'
 }
 
-/** Отправка текстовой команды (из инпута, с главного экрана или из меню «Зоя») */
 async function handleTextCommand(text: string) {
   isMenuOpen.value = false
   if (!text.trim() || isTextLoading.value) {
@@ -144,13 +133,11 @@ async function handleTextCommand(text: string) {
   }
 }
 
-/** Колбэк после успешной оплаты корзины или открытия вклада */
 async function handleActionCompleted(newBalance: number) {
   balance.value = newBalance
   await loadHistory()
 }
 
-/** Сброс демо-данных перед показом жюри (двойной тап по иконке карандаша или аватарке Зои) */
 async function handleResetDemo() {
   try {
     await resetDemo()
@@ -175,14 +162,12 @@ onMounted(() => {
 
 <template>
   <main class="app-shell">
-    <!-- Всплывающее уведомление -->
     <Transition name="toast">
       <div v-if="toastMessage" class="toast-banner">
         {{ toastMessage }}
       </div>
     </Transition>
 
-    <!-- ЭКРАН 1: ГЛАВНАЯ -->
     <HomeScreen
       v-if="activeView === 'HOME'"
       :user-name="userName"
@@ -192,7 +177,6 @@ onMounted(() => {
       @reset-demo="handleResetDemo"
     />
 
-    <!-- ЭКРАН 2: СЦЕНАРИЙ ЗАКАЗА ПРОДУКТОВ -->
     <OrderFlow
       v-else-if="activeView === 'MARKET' && marketPayload"
       :recognized-text="lastRecognizedText"
@@ -204,7 +188,6 @@ onMounted(() => {
       @completed="handleActionCompleted"
     />
 
-    <!-- ЭКРАН 3: СЦЕНАРИЙ АНАЛИТИКИ И ВКЛАДА -->
     <AnalyticsFlow
       v-else-if="activeView === 'ANALYTICS' && analyticsPayload"
       :recognized-text="lastRecognizedText"
@@ -215,7 +198,6 @@ onMounted(() => {
       @completed="handleActionCompleted"
     />
 
-    <!-- ВЫЕЗЖАЮЩЕЕ МЕНЮ «ЗОЯ» -->
     <ZoyaDrawer
       :is-open="isMenuOpen"
       :user-name="userName"
@@ -227,7 +209,6 @@ onMounted(() => {
       @reset-demo="handleResetDemo"
     />
 
-    <!-- НИЖНЯЯ ГОЛОСОВАЯ ПАНЕЛЬ (ДОСТУПНА НА ВСЕХ ЭКРАНАХ) -->
     <VoiceDock
       v-model:is-voice-mode="isVoiceMode"
       :state="dockState"

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { HistoryItem } from '~/types/zoya'
+import type { HistoryItem } from '@/types/zoya'
 
 defineProps<{
   isOpen: boolean

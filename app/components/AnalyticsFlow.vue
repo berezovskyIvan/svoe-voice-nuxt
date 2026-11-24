@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import type { AnalyticsPayload, CreateDepositResponse } from '~/types/zoya'
-import { ZoyaApiError } from '~/composables/useZoyaApi'
+import type { AnalyticsPayload, CreateDepositResponse } from '@/types/zoya'
+import { ZoyaApiError } from '@/composables/useZoyaApi'
 
 const props = defineProps<{
   recognizedText: string
@@ -22,7 +22,6 @@ const step = ref<'chart' | 'conditions' | 'confirm' | 'success'>(
   props.initialStep ?? 'chart',
 )
 
-// Интерактивные параметры конструктора (2-й экран макета)
 const depositAmount = ref<number>(offer.value.defaultAmount ?? offer.value.minAmount)
 const currency = ref<'RUB' | 'CNY'>('RUB')
 const selectedTerm = ref<number>(offer.value.termMonths || 6)
@@ -31,7 +30,6 @@ const payoutMode = ref<'monthly' | 'end'>('monthly')
 const allowTopUp = ref(false)
 const allowWithdraw = ref(false)
 
-// Чекбоксы-тумблеры подписания документов (3-й экран макета)
 const agreeService = ref(true)
 const agreeContract = ref(true)
 
@@ -63,20 +61,13 @@ const termOptions = [
   { label: '1 год', months: 12 },
 ]
 
-// Расчёт дохода по выбранной сумме и сроку (совпадает с 55 998 ₽ при 800 000 ₽ на 6 мес под 14%)
 const previewInterest = computed(() =>
   Math.floor((depositAmount.value * (offer.value.rate / 100) * selectedTerm.value) / 12),
 )
 
 const previewTotal = computed(() => depositAmount.value + previewInterest.value)
 
-const chartColors = [
-  '#a855f7', // Фиолетовый (Кафе и рестораны)
-  '#14b8a6', // Бирюзовый (Развлечения)
-  '#facc15', // Жёлтый (Магазины)
-  '#f97316', // Оранжевый (Транспорт)
-  '#64748b',
-]
+const chartColors = ['#a855f7', '#14b8a6', '#facc15', '#f97316', '#64748b']
 
 const donutSegments = computed(() => {
   const circumference = 2 * Math.PI * 38
@@ -169,7 +160,6 @@ function goToConfirm() {
   <div class="analytics-flow">
     <div class="top-glow"></div>
 
-    <!-- ВЕРХНЯЯ ПАНЕЛЬ (бургер слева, крестик справа — по 20x20px) -->
     <header class="top-bar">
       <button type="button" aria-label="Меню" class="icon-btn" @click="emit('openMenu')">
         <svg
@@ -203,7 +193,6 @@ function goToConfirm() {
       </button>
     </header>
 
-    <!-- ЭКРАН 1: АНАЛИТИКА ТРАТ + ПРЕДЛОЖЕНИЕ ВКЛАДА (4-й скрин) -->
     <template v-if="step === 'chart'">
       <div v-if="recognizedText" class="user-bubble">
         <div class="bubble-author">Вы</div>
@@ -222,7 +211,6 @@ function goToConfirm() {
         </div>
       </div>
 
-      <!-- Карточка с бубликом и легендой -->
       <div class="dark-card">
         <div class="donut-center-wrap">
           <div class="donut-box">
@@ -301,7 +289,6 @@ function goToConfirm() {
                 />
               </svg>
 
-              <!-- Иконка: Транспорт / остальное (3+) -->
               <svg
                 v-else
                 width="16"
@@ -323,7 +310,6 @@ function goToConfirm() {
         </ul>
       </div>
 
-      <!-- Инсайт по тратам -->
       <div class="dark-card insight-card">
         <img class="insight-badge" src="/images/clock.webp" />
         <div class="insight-body">
@@ -333,12 +319,10 @@ function goToConfirm() {
         </div>
       </div>
 
-      <!-- Совет ИИ -->
       <p v-if="payload.aiAdvice" class="advice-paragraph">
         {{ payload.aiAdvice }}
       </p>
 
-      <!-- Карточка параметров вклада -->
       <div class="dark-card params-card">
         <div class="param-item">
           <div class="param-label">Срок вклада</div>
@@ -371,13 +355,12 @@ function goToConfirm() {
         К открытию вклада
       </button>
     </template>
-    <!-- ЭКРАН 2: ПРОВЕРЬТЕ УСЛОВИЯ ОТКРЫТИЯ ВКЛАДА (3-й скрин, старт для intent=deposit) -->
+
     <template v-else-if="step === 'conditions'">
       <p class="screen-lead">
         Проверьте условия открытия вклада или установите собственные.
       </p>
 
-      <!-- Карточка ввода суммы с зелёным подчёркиванием -->
       <div class="dark-card amount-card">
         <div class="amount-input-row">
           <input
@@ -416,7 +399,6 @@ function goToConfirm() {
 
       <h2 class="section-title">Условия вклада</h2>
       <div class="dark-card conditions-card">
-        <!-- Сроки -->
         <div class="terms-row">
           <button
             v-for="t in termOptions"
@@ -430,13 +412,11 @@ function goToConfirm() {
           </button>
         </div>
 
-        <!-- Тумблер 1 -->
         <label class="toggle-row">
           <span class="toggle-label">Оставлять проценты на вкладе</span>
           <input v-model="capitalizeInterest" type="checkbox" class="ios-switch" />
         </label>
 
-        <!-- Выплата процентов -->
         <div class="sub-label">Выплата процентов</div>
         <div class="payout-pills">
           <button
@@ -463,14 +443,12 @@ function goToConfirm() {
           <input v-model="allowTopUp" type="checkbox" class="ios-switch" />
         </label>
 
-        <!-- Тумблер 3 -->
         <label class="toggle-row">
           <span class="toggle-label">С частичным снятием</span>
           <input v-model="allowWithdraw" type="checkbox" class="ios-switch" />
         </label>
       </div>
 
-      <!-- Плашка 14% с доходом -->
       <div class="dark-card rate-summary-card">
         <div class="rate-big">{{ offer.rate }} %</div>
         <div class="rate-income-col">
@@ -488,13 +466,11 @@ function goToConfirm() {
       </button>
     </template>
 
-    <!-- ЭКРАН 3: ВЫБЕРИТЕ СЧЁТ И ПОДПИШИТЕ ДОКУМЕНТЫ (2-й скрин) -->
     <template v-else-if="step === 'confirm'">
       <p class="screen-lead">
         Осталось еще немного. Выберите счёт и подпишите документы:
       </p>
 
-      <!-- Жёлто-лаймовая карточка вклада -->
       <div class="yellow-deposit-card">
         <div class="yellow-top">
           <span class="yellow-amount">{{ formatMoney(depositAmount) }} ₽</span>
@@ -514,7 +490,6 @@ function goToConfirm() {
         </div>
       </div>
 
-      <!-- Блок с фиолетовой картой и согласиями -->
       <div class="dark-card sign-card">
         <div class="purple-account-card">
           <div class="purple-balance">{{ formatMoney(offer.accountBalance) }} ₽</div>
@@ -562,7 +537,6 @@ function goToConfirm() {
       </div>
     </template>
 
-    <!-- ЭКРАН 4: ВКЛАД ОТКРЫТ (1-й скрин) -->
     <template v-else-if="step === 'success' && depositResult">
       <div class="success-screen">
         <img

@@ -3,8 +3,8 @@ import type {
   CreateOrderResponse,
   FarmerProductsPayload,
   ZoyaProductItem,
-} from '~/types/zoya'
-import { ZoyaApiError } from '~/composables/useZoyaApi'
+} from '@/types/zoya'
+import { ZoyaApiError } from '@/composables/useZoyaApi'
 
 const WEEKDAYS_ACCUSATIVE: Record<number, string> = {
   0: 'в воскресенье',
@@ -156,7 +156,6 @@ const extraSuggestions = [
   <div class="order-flow">
     <div class="top-glow" />
 
-    <!-- ВЕРХНЯЯ ПАНЕЛЬ (бургер слева, крестик закрытия справа) -->
     <header class="top-bar">
       <button type="button" aria-label="Меню" class="icon-btn" @click="emit('openMenu')">
         <svg
@@ -190,9 +189,7 @@ const extraSuggestions = [
       </button>
     </header>
 
-    <!-- ЭКРАН 1: КОРЗИНА И ОФОРМЛЕНИЕ (экраны 4-6 на 1-м скрине) -->
     <template v-if="step === 'cart'">
-      <!-- Плашка статуса «Заказ сформирован» (как на макете) -->
       <div class="order-status-banner">
         <img
           class="status-check-img"
@@ -213,7 +210,6 @@ const extraSuggestions = [
         Выбранное время недоступно — подобрала ближайший утренний слот.
       </div>
 
-      <!-- Секция: Товары в корзине -->
       <h2 class="section-title">Товары в корзине</h2>
       <div class="dark-card">
         <div v-if="cartItems.length === 0" class="empty-cart">
@@ -269,7 +265,6 @@ const extraSuggestions = [
         </ul>
       </div>
 
-      <!-- Секция: Доставка и оплата -->
       <template v-if="payload.delivery && cartItems.length > 0">
         <h2 class="section-title">Доставка и оплата</h2>
         <div class="dark-card info-list">
@@ -338,7 +333,6 @@ const extraSuggestions = [
           </div>
         </div>
 
-        <!-- Секция: Итого -->
         <h2 class="section-title">Итого</h2>
         <div class="dark-card summary-list">
           <div class="summary-row">
@@ -374,7 +368,6 @@ const extraSuggestions = [
       </template>
     </template>
 
-    <!-- ЭКРАН 2: ВАШ ЗАКАЗ ОФОРМЛЕН! (7-й экран на 1-м скрине) -->
     <template v-else-if="step === 'success' && orderResult">
       <div class="success-screen">
         <img class="cow-illustration" src="/images/cow.webp" alt="Коровка" />
@@ -781,7 +774,6 @@ const extraSuggestions = [
   cursor: not-allowed;
 }
 
-/* Экран 7: Ваш заказ оформлен! */
 .success-screen {
   position: relative;
   z-index: 1;

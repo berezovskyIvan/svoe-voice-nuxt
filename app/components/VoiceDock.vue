@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { VoiceDockState } from '~/types/zoya'
+import type { VoiceDockState } from '@/types/zoya'
 
 const props = defineProps<{
   state: VoiceDockState
@@ -7,7 +7,6 @@ const props = defineProps<{
   errorMessage: string
   volume: number
   isTextLoading?: boolean
-  /** Открыт ли полноэкранный голосовой оверлей (на главном экране по клику на микрофон) */
   isVoiceMode?: boolean
 }>()
 
@@ -27,12 +26,10 @@ const isRecordingActive = computed(
   () => props.state === 'LISTENING' || props.state === 'PAUSED_2S',
 )
 
-// Показывать ли развернутый голосовой блок с 3 кнопками (× — центральная — ⌨)
 const showExpandedControls = computed(
   () => !isKeyboardOpen.value && (props.isVoiceMode || props.state !== 'IDLE'),
 )
 
-// 21 столбик волны из 2-го и 4-го скринов
 const waveBars = computed(() => {
   const pattern = [
     0.2, 0.35, 0.6, 0.4, 0.85, 0.5, 0.95, 0.7, 0.45, 1, 0.65, 0.9, 0.5, 0.8, 0.4, 0.65,
@@ -127,7 +124,6 @@ function handleTextSubmit() {
 
 <template>
   <div class="voice-dock" :class="{ 'is-expanded': showExpandedControls }">
-    <!-- ЖИВОЙ ТЕКСТ НАВЕРХУ ВО ВРЕМЯ ДИКТОВКИ (как на 1-м и 5-м скринах) -->
     <Transition name="fade">
       <div
         v-if="showExpandedControls && (liveTranscript || isRecordingActive)"
@@ -139,9 +135,7 @@ function handleTextSubmit() {
       </div>
     </Transition>
 
-    <!-- РАЗВЕРНУТЫЙ ГОЛОСОВОЙ КОНТРОЛЛЕР (6 состояний из 2-го скрина) -->
     <div v-if="showExpandedControls" class="expanded-panel">
-      <!-- Волна / пунктирная линия -->
       <div class="wave-track">
         <span
           v-for="(h, idx) in waveBars"
@@ -152,7 +146,6 @@ function handleTextSubmit() {
         />
       </div>
 
-      <!-- Статус над кнопкой -->
       <p
         class="status-label"
         :class="{
@@ -163,7 +156,6 @@ function handleTextSubmit() {
         {{ statusTitle }}
       </p>
 
-      <!-- Ряд из 3 кнопок: [ × ]  [ Главная кнопка ]  [ ⌨ ] -->
       <div class="controls-row">
         <button
           type="button"
@@ -187,7 +179,6 @@ function handleTextSubmit() {
           </svg>
         </button>
 
-        <!-- Центральная кнопка во всех 6 состояниях -->
         <button
           type="button"
           :disabled="state === 'PROCESSING'"
@@ -196,13 +187,11 @@ function handleTextSubmit() {
           :class="[`state-${state.toLowerCase()}`]"
           @click="handleMainCircleClick"
         >
-          <!-- Кольцо загрузки / автоотправки -->
           <span
             v-if="state === 'PROCESSING' || state === 'PAUSED_2S'"
             class="ring-loader"
           />
 
-          <!-- Иконка: Пауза (LISTENING) -->
           <svg
             v-if="state === 'LISTENING'"
             width="28"
@@ -214,7 +203,6 @@ function handleTextSubmit() {
             <rect x="14" y="5" width="4" height="14" rx="1.5" />
           </svg>
 
-          <!-- Иконка: Повтор (ERROR) -->
           <svg
             v-else-if="state === 'ERROR'"
             width="26"
@@ -236,7 +224,6 @@ function handleTextSubmit() {
             />
           </svg>
 
-          <!-- Иконка: Перечеркнутый микрофон (NO_PERMISSION) -->
           <svg
             v-else-if="state === 'NO_PERMISSION'"
             width="24"
@@ -258,7 +245,6 @@ function handleTextSubmit() {
             />
           </svg>
 
-          <!-- Иконка: Микрофон (IDLE / PAUSED_2S / PROCESSING) -->
           <svg v-else width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
             <path d="M12 14a3 3 0 0 0 3-3V5a3 3 0 0 0-6 0v6a3 3 0 0 0 3 3z" />
             <path
@@ -271,7 +257,6 @@ function handleTextSubmit() {
           </svg>
         </button>
 
-        <!-- Кнопка переключения на клавиатуру -->
         <button
           type="button"
           aria-label="Ввести текстом"
@@ -295,7 +280,6 @@ function handleTextSubmit() {
         </button>
       </div>
 
-      <!-- Кнопка настроек (только при NO_PERMISSION) или нижняя подсказка -->
       <button
         v-if="state === 'NO_PERMISSION'"
         type="button"
@@ -309,7 +293,6 @@ function handleTextSubmit() {
       </p>
     </div>
 
-    <!-- КОМПАКТНАЯ НИЖНЯЯ ПАНЕЛЬ С ИНПУТОМ (отдельный инпут + отдельный круг микрофона справа) -->
     <div v-else class="compact-bar">
       <form class="compact-form" @submit.prevent="handleTextSubmit">
         <input
@@ -382,7 +365,6 @@ function handleTextSubmit() {
   border-top: 1px solid #494949;
 }
 
-/* Полноэкранный тёмный режим при активном голосовом вводе (как на 3-м экране макета) */
 .voice-dock.is-expanded {
   inset: 0;
   top: 0;
@@ -397,7 +379,6 @@ function handleTextSubmit() {
   background-repeat: no-repeat;
 }
 
-/* Живой текст сверху при диктовке */
 .live-speech-overlay {
   margin-bottom: auto;
   padding: 4px 4px 0;
@@ -412,7 +393,6 @@ function handleTextSubmit() {
   color: var(--text-primary);
 }
 
-/* Развернутый голосовой блок (6 состояний из 2-го и 4-го скринов) */
 .expanded-panel {
   display: flex;
   flex-direction: column;
@@ -487,7 +467,6 @@ function handleTextSubmit() {
   transform: scale(0.92);
 }
 
-/* Центральная круглая кнопка во всех 6 состояниях */
 .center-btn {
   position: relative;
   display: flex;
@@ -507,28 +486,24 @@ function handleTextSubmit() {
   transform: scale(0.94);
 }
 
-/* Состояние 2: LISTENING — увеличенная кнопка паузы с ореолом */
 .center-btn.state-listening {
   width: 88px;
   height: 88px;
   box-shadow: 0 0 0 10px rgba(46, 213, 52, 0.18);
 }
 
-/* Состояние 4: PROCESSING — тёмный круг со спиннером */
 .center-btn.state-processing {
   background: var(--bg-surface-elevated);
   color: var(--text-primary);
   cursor: wait;
 }
 
-/* Состояние 5: ERROR — кораллово-красная кнопка повтора */
 .center-btn.state-error {
   background: var(--color-danger);
   color: var(--text-primary);
   box-shadow: 0 0 0 8px rgba(244, 106, 94, 0.16);
 }
 
-/* Состояние 6: NO_PERMISSION — приглушённая кнопка */
 .center-btn.state-no_permission {
   background: var(--bg-surface-elevated);
   color: var(--text-subtle);
@@ -563,7 +538,6 @@ function handleTextSubmit() {
   cursor: pointer;
 }
 
-/* Компактная строка снизу (отдельная капсула инпута + отдельная кнопка микрофона справа) */
 .compact-bar {
   display: flex;
   align-items: center;
