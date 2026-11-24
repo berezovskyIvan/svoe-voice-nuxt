@@ -1287,7 +1287,7 @@ function goToConfirm() {
 
 .next-actions-wrap {
   width: 100%;
-  margin-top: 68px;
+  margin-top: 48px;
   text-align: left;
 }
 
