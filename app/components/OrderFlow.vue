@@ -491,25 +491,6 @@ const extraSuggestions = [
   color: var(--text-muted);
 }
 
-.brand-pill {
-  display: inline-block;
-  padding: 4px 10px;
-  border-radius: var(--radius-full);
-  background: #ffffff;
-  color: #080a08;
-  font-size: var(--fs-micro);
-  font-weight: var(--fw-semibold);
-  letter-spacing: 0.04em;
-}
-
-.reply-text {
-  margin: 10px 0 0;
-  font-size: var(--fs-body-lg);
-  font-weight: var(--fw-regular);
-  line-height: 1.4;
-  color: var(--text-primary);
-}
-
 .section-title {
   position: relative;
   z-index: 1;

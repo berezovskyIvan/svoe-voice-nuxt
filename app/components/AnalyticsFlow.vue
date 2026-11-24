@@ -311,7 +311,7 @@ function goToConfirm() {
       </div>
 
       <div class="dark-card insight-card">
-        <img class="insight-badge" src="/images/clock.webp" />
+        <img class="insight-badge" src="/images/clock.webp" alt="Часы" />
         <div class="insight-body">
           <div class="insight-title">На кафе −18% к прошлому месяцу</div>
           <div class="insight-sub">Установить лимит 12 000 ₽ в месяц?</div>
@@ -486,7 +486,7 @@ function goToConfirm() {
             <div class="yellow-val">{{ offer.rate }}%</div>
             <div class="yellow-label">Ставка</div>
           </div>
-          <img class="coins-emoji" src="/images/money-sack.webp" />
+          <img class="coins-emoji" src="/images/money-sack.webp" alt="Мешок денег" />
         </div>
       </div>
 
