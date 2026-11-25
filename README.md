@@ -68,7 +68,7 @@ NUXT_PUBLIC_ZOYA_API_BASE=https://api.svoe-voice.ru
 | :--- | :--- | :--- |
 | `GET` | `/api/actions/history` | Получение имени пользователя, текущего баланса и истории операций |
 | `POST` | `/api/assistant/text` | Отправка текстовой команды ассистенту и получение интента (`farmer-products`, `analytics`, `deposit`, `unknown`) |
-| `POST` | `/api/actions/order` | Подтверждение и оплата заказа фермерских продуктов (с обработкой `PRICE_CHANGED`) |
+| `POST` | `/api/actions/order` | Подтверждение и оплата заказа фермерских продуктов |
 | `POST` | `/api/actions/deposit` | Открытие вклада на указанную сумму |
 | `POST` | `/api/actions/reset` | Сброс демо-баланса и истории операций к исходному состоянию |
 | `WS` | `/api/assistant/voice` | Потоковое распознавание голосовой команды |
