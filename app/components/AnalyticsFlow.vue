@@ -293,7 +293,6 @@ function handleAmountInput(event: Event) {
                   </feMerge>
                 </filter>
 
-                <!-- Маска вырезает прозрачный зазор только в месте стыка, не создавая обводку вокруг кольца -->
                 <mask
                   v-for="seg in donutSegments"
                   :id="`seg-cutout-${seg.idx}`"
@@ -325,7 +324,6 @@ function handleAmountInput(event: Event) {
                 stroke-width="18"
               />
 
-              <!-- Рисуем в обратном порядке, чтобы конец каждого сектора с иконкой лежал поверх следующего -->
               <g transform="rotate(-90 110 110)" filter="url(#donut-glow)">
                 <circle
                   v-for="seg in reversedSegments"
@@ -342,7 +340,6 @@ function handleAmountInput(event: Event) {
                   :stroke-dashoffset="seg.strokeDashoffset"
                 />
 
-                <!-- Закрывающий скруглённый край последнего сектора на 12 часах поверх первого -->
                 <circle
                   v-if="donutSegments.length > 1 && lastSegment"
                   cx="110"
