@@ -1,75 +1,77 @@
-# Nuxt Minimal Starter
+# Say Pay | Сэй Пэй. Первый голосовой банк — Frontend
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+Мультимодальный голосовой и текстовый банковский ассистент на **Nuxt 4 + Vue 3 + TypeScript**.  
+Позволяет голосом или текстом заказывать фермерские продукты с доставкой, анализировать расходы за месяц и оформлять банковские вклады в едином мобильном интерфейсе.
 
-## Setup
+---
 
-Make sure to install dependencies:
+## Технологический стек
 
+* **Фреймворк:** Nuxt `^4.6.4` (Vue `^3.5.44`, Vue Router `^5.4.0`)
+* **Язык:** TypeScript `^6.0.2`
+* **Стили:** Нативный CSS с дизайн-токенами (`app/assets/css/variables.css`), мобильная оболочка `440px`
+* **Аудио и стриминг:** Web Audio API (`AudioContext` + `ScriptProcessorNode`, ресемплинг в 16 kHz Int16 PCM) + WebSocket
+* **Линтинг и форматирование:** ESLint (`@nuxt/eslint`) + Prettier
+
+---
+
+## Быстрый старт
+
+### 1. Установка зависимостей
 ```bash
-# npm
 npm install
-
-# pnpm
-pnpm install
-
-# yarn
-yarn install
-
-# bun
-bun install
 ```
 
-## Development Server
-
-Start the development server on `http://localhost:3000`:
-
+### 2. Запуск в режиме разработки
 ```bash
-# npm
 npm run dev
-
-# pnpm
-pnpm dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
 ```
+Приложение будет доступно по адресу `http://localhost:3000`.
 
-## Production
-
-Build the application for production:
-
+### 3. Сборка и запуск production-версии
 ```bash
-# npm
 npm run build
-
-# pnpm
-pnpm build
-
-# yarn
-yarn build
-
-# bun
-bun run build
+npm run start
 ```
 
-Locally preview production build:
-
+### 4. Проверка качества кода
 ```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
+npm run lint    # Проверка ESLint
+npm run format  # Автоформатирование Prettier
 ```
 
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+---
+
+## Конфигурация
+
+Базовый URL бэкенда задаётся в `nuxt.config.ts` (`runtimeConfig.public.zoyaApiBase`) и при необходимости переопределяется стандартной переменной окружения Nuxt:
+
+```env
+NUXT_PUBLIC_ZOYA_API_BASE=https://api.svoe-voice.ru
+```
+
+---
+
+## Сценарии для проверки
+
+Вы можете протестировать ассистента голосом (через микрофон в нижней панели), текстом или нажатием на карточки быстрого старта:
+
+1. **Заказ фермерских продуктов:** *«Закажи молоко, творог и яйца с доставкой на субботу утром»* — формирует корзину, проверяет слот доставки, пересчитывает сумму при изменении количества и списывает оплату с баланса.
+2. **Финансовая аналитика:** *«На что я больше всего потратила в этом месяце?»* — строит кольцевую диаграмму расходов по категориям и предлагает открыть доходный вклад.
+3. **Оформление вклада:** *«Открой вклад под 14%»* — открывает калькулятор условий вклада, расчёт доходности, подписание согласий и зачисление в историю операций.
+
+---
+
+## Интеграция с Backend API
+
+| Метод | Endpoint | Назначение |
+| :--- | :--- | :--- |
+| `GET` | `/api/actions/history` | Получение имени пользователя, текущего баланса и истории операций |
+| `POST` | `/api/assistant/text` | Отправка текстовой команды ассистенту и получение интента (`farmer-products`, `analytics`, `deposit`, `unknown`) |
+| `POST` | `/api/actions/order` | Подтверждение и оплата заказа фермерских продуктов (с обработкой `PRICE_CHANGED`) |
+| `POST` | `/api/actions/deposit` | Открытие вклада на указанную сумму |
+| `POST` | `/api/actions/reset` | Сброс демо-баланса и истории операций к исходному состоянию |
+| `WS` | `/api/assistant/voice` | Потоковое распознавание голосовой команды |
+
+### Скрытые демо-функции для презентации
+* **Сброс демо-счёта и истории:** двойной клик по аватару «Зоя» в левой выдвижной шторке (`ZoyaDrawer.vue`) вызывает `POST /api/actions/reset` и возвращает баланс и историю в исходное состояние.
