@@ -1050,7 +1050,7 @@ function handleAmountInput(event: Event) {
   white-space: nowrap;
   border-right: 1px solid #525252;
   padding-right: 8px;
-  height: -webkit-fill-available;
+  height: 41px;
   display: flex;
   align-items: center;
   justify-content: center;
